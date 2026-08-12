@@ -21,3 +21,19 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Layout grid: 12 columns, 80px margin, 24px gutter (desktop) */
+.grid-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 24px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .grid-container {
+    padding-inline: 80px;
+  }
+}
