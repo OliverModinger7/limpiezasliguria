@@ -33,7 +33,7 @@ export default function Hero() {
         <div className="col-span-12 lg:col-start-2 mt-10">
           <a
             href="#contacto"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-transparent text-[#0B1C33] font-bold text-base rounded-full border-2 border-[#0B1C33] hover:bg-[#0B1C33] hover:text-white transition-colors"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white/25 backdrop-blur-xl backdrop-saturate-150 text-[#0B1C33] font-bold text-base rounded-full border border-white/50 shadow-[0_8px_32px_rgba(11,28,51,0.18),inset_0_1px_1px_rgba(255,255,255,0.8),inset_0_-1px_1px_rgba(11,28,51,0.06)] hover:bg-white/40 hover:border-white/70 transition-all"
           >
             Solicitar cotización gratis
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
