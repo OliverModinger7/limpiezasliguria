@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const links = [
@@ -13,14 +14,18 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B1C33]">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#12263A]">
       <div className="grid-container">
         <div className="col-span-12 flex items-center justify-between h-20">
-          <Link
-            href="/"
-            className="text-2xl font-bold text-[#5EEAD4]"
-          >
-            Liguria
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/liguria-long.png"
+              alt="Liguria"
+              width={1369}
+              height={603}
+              priority
+              className="h-9 w-auto"
+            />
           </Link>
 
           <ul className="hidden md:flex items-center gap-10">
