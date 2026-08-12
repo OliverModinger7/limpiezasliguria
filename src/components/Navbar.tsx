@@ -18,7 +18,7 @@ export default function Navbar() {
         <div className="col-span-12 flex items-center justify-between h-20">
           <Link
             href="/"
-            className="font-[family-name:var(--font-baloo)] text-2xl font-bold text-[#5EEAD4]"
+            className="text-2xl font-bold text-[#5EEAD4]"
           >
             Liguria
           </Link>
