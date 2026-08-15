@@ -28,8 +28,8 @@ const contactInfo = [
       </svg>
     ),
     label: 'Teléfono',
-    value: '+34 600 000 000',
-    href: 'tel:+34600000000',
+    value: '+569 42563693',
+    href: 'tel:+56942563693',
   },
   {
     icon: (
@@ -38,8 +38,8 @@ const contactInfo = [
       </svg>
     ),
     label: 'Email',
-    value: 'info@limpiezasliguria.com',
-    href: 'mailto:info@limpiezasliguria.com',
+    value: 'contacto@limpiezasliguria.cl',
+    href: 'mailto:contacto@limpiezasliguria.cl',
   },
   {
     icon: (
@@ -49,7 +49,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'Zona de servicio',
-    value: 'Liguria y alrededores',
+    value: 'Santiago y alrededores',
     href: null,
   },
   {
@@ -59,7 +59,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'Horario de atención',
-    value: 'Lun–Sáb: 8:00–20:00',
+    value: 'Lun–Sáb: 8:00–18:00',
     href: null,
   },
 ]
@@ -131,7 +131,7 @@ export default function Contact() {
                 Escríbenos directamente y te atendemos al momento.
               </p>
               <a
-                href="https://wa.me/34600000000"
+                href="https://wa.me/56942563693"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-500 text-white text-sm font-semibold rounded-xl hover:bg-green-600 transition-colors w-full justify-center"
@@ -191,7 +191,7 @@ export default function Contact() {
                       type="tel"
                       value={form.phone}
                       onChange={handleChange}
-                      placeholder="+34 600 000 000"
+                      placeholder="+569 0000 0000"
                       className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     />
                   </div>
