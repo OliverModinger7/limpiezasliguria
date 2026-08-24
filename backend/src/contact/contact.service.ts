@@ -4,9 +4,15 @@ import {
   Logger,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import * as nodemailer from 'nodemailer';
 import type { Transporter } from 'nodemailer';
 import { CreateContactDto } from './dto/create-contact.dto';
+import {
+  ContactRequest,
+  ContactRequestDocument,
+} from './schemas/contact-request.schema';
 
 @Injectable()
 export class ContactService {
@@ -15,14 +21,23 @@ export class ContactService {
   private readonly mailTo: string;
   private readonly mailFrom: string;
 
-  constructor(private readonly config: ConfigService) {
+  constructor(
+    private readonly config: ConfigService,
+    @InjectModel(ContactRequest.name)
+    private readonly contactRequestModel: Model<ContactRequestDocument>,
+  ) {
+    const port = this.config.get<number>('SMTP_PORT', 587);
+
     this.transporter = nodemailer.createTransport({
       host: this.config.get<string>('SMTP_HOST'),
-      port: this.config.get<number>('SMTP_PORT', 587),
-      secure: this.config.get<string>('SMTP_SECURE', 'false') === 'true',
+      port,
+      secure:
+        this.config.get<string>('SMTP_SECURE') !== undefined
+          ? this.config.get<string>('SMTP_SECURE') === 'true'
+          : Number(port) === 465,
       auth: {
         user: this.config.get<string>('SMTP_USER'),
-        pass: this.config.get<string>('SMTP_PASS'),
+        pass: this.config.get<string>('SMTP_PASSWORD'),
       },
     });
 
@@ -38,6 +53,23 @@ export class ContactService {
 
   async sendQuoteRequest(dto: CreateContactDto): Promise<void> {
     try {
+      await this.contactRequestModel.create({
+        name: dto.name,
+        email: dto.email,
+        phone: dto.phone,
+        service: dto.service,
+      });
+    } catch (err) {
+      this.logger.error(
+        'Error guardando la solicitud en MongoDB',
+        err as Error,
+      );
+      throw new InternalServerErrorException(
+        'No se pudo guardar la solicitud.',
+      );
+    }
+
+    try {
       await this.transporter.sendMail({
         from: `"Formulario Liguria" <${this.mailFrom}>`,
         to: this.mailTo,
@@ -46,8 +78,12 @@ export class ContactService {
         html: this.buildHtml(dto),
       });
     } catch (err) {
+      // La solicitud ya quedó guardada en MongoDB aunque falle el correo,
+      // así que se puede recuperar manualmente aunque el aviso no llegue.
       this.logger.error('Error enviando el correo de contacto', err as Error);
-      throw new InternalServerErrorException('No se pudo enviar la solicitud.');
+      throw new InternalServerErrorException(
+        'No se pudo enviar la notificación por correo.',
+      );
     }
   }
 

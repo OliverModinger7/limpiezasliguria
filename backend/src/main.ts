@@ -7,7 +7,11 @@ async function bootstrap() {
 
   const allowedOrigins = process.env.FRONTEND_ORIGIN?.split(',').map((o) =>
     o.trim(),
-  ) ?? ['http://localhost:3002', 'https://limpiezasliguria.cl', 'https://www.limpiezasliguria.cl'];
+  ) ?? [
+    'http://localhost:3002',
+    'https://limpiezasliguria.cl',
+    'https://www.limpiezasliguria.cl',
+  ];
 
   app.enableCors({
     origin: allowedOrigins,
