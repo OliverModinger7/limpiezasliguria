@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://limpiezasliguria.cl"),
   title: "Liguria | Servicios de aseo profesional",
   description:
     "Liguria Servicios de Aseo SpA. Limpieza profesional para hogares, condominios, edificios y oficinas en Santiago, Chile. Tel. +56 9 4256 3693 · contacto@limpiezasliguria.cl",
