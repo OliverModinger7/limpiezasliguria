@@ -23,6 +23,7 @@ export default function HeroForm() {
   const [form, setForm] = useState<FormState>({ name: '', email: '', phone: '', service: '' })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -33,9 +34,26 @@ export default function HeroForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 1000))
-    setLoading(false)
-    setSubmitted(true)
+    setError(null)
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error ?? 'No se pudo enviar la solicitud.')
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'No se pudo enviar la solicitud.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -140,6 +158,12 @@ export default function HeroForm() {
           ))}
         </select>
       </div>
+
+      {error && (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-2.5">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
